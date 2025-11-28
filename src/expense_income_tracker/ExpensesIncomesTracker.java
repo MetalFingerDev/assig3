@@ -74,85 +74,49 @@ public class ExpensesIncomesTracker extends JFrame {
     }
 
     private void addEntry() {
-        String date = dateField.getText();
-        String description = descriptionField.getText();
-        String amountStr = amountField.getText();
-        String type = (String) typeCombobox.getSelectedItem();
-        double amount;
-
-        if (amountStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Enter the Amount", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         try {
-            amount = Double.parseDouble(amountStr);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Amount Format", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            double amount = Double.parseDouble(amountField.getText());
+            String type = (String) typeCombobox.getSelectedItem();
+            if (type.equals("Expense"))
+                amount *= -1;
+            ExpenseIncomeEntry entry = new ExpenseIncomeEntry(dateField.getText(), descriptionField.getText(), amount,
+                    type);
+            tableModel.addEntry(entry);
+            balance += amount;
+            balanceLabel.setText("Balance: Rs." + balance);
+            clearInputFields();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        if (type.equals("Expense")) {
-            amount *= -1;
-        }
-
-        ExpenseIncomeEntry entry = new ExpenseIncomeEntry(date, description, amount, type);
-        tableModel.addEntry(entry);
-
-        balance += amount;
-        balanceLabel.setText("Balance: Rs." + balance);
-
-        clearInputFields();
     }
 
     private void editEntry() {
-        int selectedRowIndex = table.getSelectedRow();
-        if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Select a row to edit", "Error", JOptionPane.ERROR_MESSAGE);
+        int row = table.getSelectedRow();
+        if (row == -1)
             return;
-        }
-
-        String updatedDate = dateField.getText();
-        String updatedDescription = descriptionField.getText();
-        String updatedAmountStr = amountField.getText();
-        String updatedType = (String) typeCombobox.getSelectedItem();
-
-        if (updatedAmountStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Enter the Updated Amount", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         try {
-            double updatedAmount = Double.parseDouble(updatedAmountStr);
-            if (updatedType.equals("Expense")) {
-                updatedAmount *= -1;
-            }
-
-            ExpenseIncomeEntry updatedEntry = new ExpenseIncomeEntry(updatedDate, updatedDescription, updatedAmount,
-                    updatedType);
-            tableModel.editEntry(selectedRowIndex, updatedEntry);
-
-            balance += updatedAmount;
+            double amount = Double.parseDouble(amountField.getText());
+            String type = (String) typeCombobox.getSelectedItem();
+            if (type.equals("Expense"))
+                amount *= -1;
+            ExpenseIncomeEntry entry = new ExpenseIncomeEntry(dateField.getText(), descriptionField.getText(), amount,
+                    type);
+            tableModel.editEntry(row, entry);
+            balance += amount;
             balanceLabel.setText("Balance: Rs." + balance);
-
             clearInputFields();
-
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Updated Amount Format", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void removeEntry() {
-        int selectedRowIndex = table.getSelectedRow();
-        if (selectedRowIndex == -1) {
-            JOptionPane.showMessageDialog(this, "Select a row to remove", "Error", JOptionPane.ERROR_MESSAGE);
+        int row = table.getSelectedRow();
+        if (row == -1)
             return;
-        }
-
-        double removedAmount = (double) table.getValueAt(selectedRowIndex, 2);
-        tableModel.removeEntry(selectedRowIndex);
-
-        balance -= removedAmount;
+        double amt = (double) table.getValueAt(row, 2);
+        tableModel.removeEntry(row);
+        balance -= amt;
         balanceLabel.setText("Balance: Rs." + balance);
     }
 

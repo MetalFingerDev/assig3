@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 public class ExpenseIncomeTableModel extends AbstractTableModel {
 
     private final List<ExpenseIncomeEntry> entries;
-    private final String[] columnNames = {"Date", "Description", "Amount", "Type"};
+    private final String[] columnNames = { "Date", "Description", "Amount", "Type" };
 
     public ExpenseIncomeTableModel() {
         entries = new ArrayList<>();
@@ -32,29 +32,35 @@ public class ExpenseIncomeTableModel extends AbstractTableModel {
     }
 
     public void sortByColumn(int columnIndex) {
-        Collections.sort(entries, new Comparator<ExpenseIncomeEntry>() {
-            @Override
-            public int compare(ExpenseIncomeEntry e1, ExpenseIncomeEntry e2) {
-                Comparable<Object> value1 = (Comparable<Object>) getColumnValue(e1, columnIndex);
-                Comparable<Object> value2 = (Comparable<Object>) getColumnValue(e2, columnIndex);
-                return value1.compareTo(value2);
-            }
-        });
-        fireTableDataChanged();
-    }
-    
-
-    public void formatDateColumn(int columnIndex, String dateFormat) {
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-        for (int i = 0; i < entries.size(); i++) {
-            fireTableCellUpdated(i, columnIndex);
+        Comparator<ExpenseIncomeEntry> comparator;
+        switch (columnIndex) {
+            case 0:
+                comparator = Comparator.comparing(ExpenseIncomeEntry::getDate,
+                        Comparator.nullsFirst(String::compareTo));
+                break;
+            case 1:
+                comparator = Comparator.comparing(ExpenseIncomeEntry::getDescription,
+                        Comparator.nullsFirst(String::compareTo));
+                break;
+            case 2:
+                comparator = Comparator.comparingDouble(ExpenseIncomeEntry::getAmount);
+                break;
+            case 3:
+                comparator = Comparator.comparing(ExpenseIncomeEntry::getType,
+                        Comparator.nullsFirst(String::compareTo));
+                break;
+            default:
+                comparator = Comparator.comparing(e -> String.valueOf(getColumnValue(e, columnIndex)));
         }
-    }
-
-    public void filterByType(String type) {
-        entries.removeIf(entry -> !entry.getType().equals(type));
+        entries.sort(comparator);
         fireTableDataChanged();
     }
+
+    public double getBalance() {
+        return entries.stream().mapToDouble(ExpenseIncomeEntry::getAmount).sum();
+    }
+
+    // Removed unused formatDateColumn and filterByType for simplicity
 
     private Object getColumnValue(ExpenseIncomeEntry entry, int columnIndex) {
         switch (columnIndex) {

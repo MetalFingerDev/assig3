@@ -11,17 +11,5 @@ public class TestTracker {
         printModel(model);
     }
 
-    static void printModel(ExpenseIncomeTableModel m) {
-        int rows = m.getRowCount();
-        int cols = m.getColumnCount();
-        double balance = 0;
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                System.out.print(m.getValueAt(r, c) + "\t");
-            }
-            System.out.println();
-            balance += (double) m.getValueAt(r, 2);
-        }
-        System.out.println("Balance: Rs " + balance);
-    }
+    // ...existing code...
 }
