@@ -4,7 +4,7 @@ This document describes the high-level architecture of the Expense & Income Trac
 
 ## High level
 
-The application follows a small Model-View(-Controller) pattern using Java Swing:
+The app uses a simple Model-View(-Controller) pattern with Java Swing:
 
 - Model: `ExpenseIncomeEntry` (POJO) and `ExpenseIncomeTableModel` (extends `AbstractTableModel`).
 - View / Controller: `ExpensesIncomesTracker` — a `JFrame` that contains input controls (text fields, combobox, buttons), a `JTable` backed by the table model and action listeners that act as the controller.
@@ -33,11 +33,12 @@ ExpenseIncomeEntry - date: String - description: String - amount: double - type:
 
 ## Non-functional
 
-- Simplicity: small codebase, minimal dependencies so it compiles with the JDK.
-- Extensibility: model and table separated to make it easier to add persistence or remote sync later.
-- Desktop-focused: built with Swing; cross-platform UI but limited by default look-and-feel.
+- Simple codebase, minimal dependencies, compiles with the JDK.
+- Easy to extend: model and table are separate, so adding features is simple.
+- Desktop-focused: built with Swing, works cross-platform.
 
 ## Notes / known issues
 
-- `ExpenseIncomeTableModel` currently triggers an unchecked-operations compiler note due to a Comparator/generic cast — not fatal but can be cleaned up.
-- Persisting data is not implemented yet (in-memory only).
+- `ExpenseIncomeTableModel` triggers a compiler note about generics (not fatal).
+- Data is in-memory only for now.
+- Use `cli.sh` or `ui.sh` to launch the app.

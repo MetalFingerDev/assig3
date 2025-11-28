@@ -1,6 +1,6 @@
 # Expense & Income Tracker
 
-Simple desktop budget tracker (Java Swing) that demonstrates a small MVC-style GUI app for recording expenses and incomes.
+Simple desktop budget tracker (Java Swing) for tracking expenses and incomes. Easy to run, no extra setup.
 
 This repository is a copy / adaptation of the original project by Bhavesh — please see the credit below.
 
@@ -27,24 +27,24 @@ If you want the original FlatLaf look-and-feel later, see the notes under "Optio
 
 ## How to build and run
 
-From the project root (Linux / bash):
+Just use the scripts in the project root:
 
 ```bash
-# compile everything
-mkdir -p out
-javac -d out src/expense_income_tracker/*.java test/*.java
+# For the command-line app
+./cli.sh
 
-# run the simple console test harness
-java -cp out test.TestTracker
-
-# run the GUI application
-java -cp out expense_income_tracker.ExpensesIncomesTracker
+# For the GUI app
+./ui.sh
 ```
 
-Notes:
+Both scripts compile the code before running. No need to run javac yourself.
 
-- The `test/TestTracker` class demonstrates the table model without launching the Swing UI (good for quick checks).
-- If you later want to use FlatLaf (original repo visual style), add the FlatLaf jar to a `lib/` folder and include it on the classpath when compiling/running (example below).
+If you want to run the test harness:
+
+```bash
+javac -d . src/expense_income_tracker/*.java test/*.java
+java test.TestTracker
+```
 
 ## Optional: FlatLaf (restore original look-and-feel)
 
@@ -58,6 +58,10 @@ java -cp "out:lib/*" expense_income_tracker.ExpensesIncomesTracker
 ```
 
 Alternatively, use Maven/Gradle and declare `com.formdev:flatlaf` as a dependency.
+
+## Note
+
+The .desktop launcher was removed. Just use the scripts above to run the app.
 
 ## Future work / TODO
 
