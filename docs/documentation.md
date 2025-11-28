@@ -9,7 +9,7 @@ This file documents the development process used to copy and adapt the original 
 3. Fixed a runtime/build friction point: the original project used `com.formdev.flatlaf.FlatDarkLaf` which requires an external jar. To make the repo buildable out-of-the-box, the GUI class was updated to use the system LookAndFeel. That change is localized to `src/expense_income_tracker/ExpensesIncomesTracker.java`.
 4. Compiled the model classes and ran a simple test harness `test/TestTracker.java` to confirm behaviour (two rows added, balance calculated correctly).
 
-## Summary of code changes (important)
+## Summary of code changes
 
 - Replaced FlatLaf usage with `UIManager.getSystemLookAndFeelClassName()` to avoid an external dependency.
 - Consolidated sources into a single `src/expense_income_tracker` package to keep imports and package declarations consistent.
@@ -30,11 +30,6 @@ This file documents the development process used to copy and adapt the original 
 - A simple test runner `test/TestTracker` adds two entries and prints the table rows and balance — useful for headless checks without launching the UI.
 - No JUnit tests were added yet; adding JUnit and a `pom.xml` (or Gradle build) is recommended for automated testing.
 
-## How to re-introduce FlatLaf (original look-and-feel)
-
-1. Download the FlatLaf jar and place into `lib/` (for example `lib/flatlaf-3.x.x.jar`).
-2. Compile with the jar on the classpath: `javac -d out -cp "lib/*" src/expense_income_tracker/*.java`.
-3. Run with both `out` and `lib/*` on the classpath: `java -cp "out:lib/*" expense_income_tracker.ExpensesIncomesTracker`.
 
 ## Development workflow & tracking planned changes
 
@@ -51,11 +46,5 @@ This file documents the development process used to copy and adapt the original 
 - Export/import CSV and simple reporting (monthly totals, category summaries).
 - Unit tests and CI pipeline (GitHub Actions) for compile + test runs.
 
-## Notes for contributors
-
-- When changing public behavior (model API), add tests demonstrating expected behavior.
-- Keep UI changes separate from model changes to retain testability.
-
 ---
 
-If you want, I can add a `pom.xml` to manage the FlatLaf dependency and provide `mvn compile` / `mvn exec:java` targets — say the word and I'll add it next.

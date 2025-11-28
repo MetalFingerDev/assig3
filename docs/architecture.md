@@ -23,7 +23,7 @@ The application follows a small Model-View(-Controller) pattern using Java Swing
 3. The table model updates its internal list and fires table events to refresh the `JTable` view.
 4. The GUI updates balance and clears inputs.
 
-## UML (very small ASCII sketch)
+## UML
 
 ExpensesIncomesTracker - tableModel: ExpenseIncomeTableModel - table: JTable + addEntry() + editEntry() + removeEntry()
 
