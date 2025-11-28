@@ -1,3 +1,10 @@
+**Navigation**
+
+- [REPORT.md](../REPORT.md)
+- [README.md](../README.md)
+- [Architecture](architecture.md)
+- [Description](description.md)
+
 # Development & Documentation
 
 This file documents the development process used to copy and adapt the original Expense_Income_Tracker project, lists the Java features used, and explains how future changes will be tracked.
