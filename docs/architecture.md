@@ -1,11 +1,12 @@
 # Architecture & Design
 
+[< back to REPORT.md](../REPORT.md)
+
 High-level architecture:
 
 - CLI Application (Main)
 
 Process flow (textual):
-
 
 UML / Class diagram (ASCII):
 
@@ -14,7 +15,6 @@ Main
 Functional modules:
 
 Non-functional requirements:
-
 
 ExpensesIncomesTracker - tableModel: ExpenseIncomeTableModel - table: JTable + addEntry() + editEntry() + removeEntry()
 
@@ -44,3 +44,5 @@ Additional notes:
 
 - A quick test harness (`test/TestTracker.java`) can be used to verify basic model behaviour: it adds two rows and prints table contents and balance to confirm business logic.
 - The code intentionally keeps dependencies minimal—adding new UI LAF libraries is optional and should be documented if introduced in future.
+
+[< back to REPORT.md](../REPORT.md)

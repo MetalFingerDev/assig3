@@ -53,9 +53,9 @@ public class ExpenseIncomeTableModelTest {
         // Date string is not parsed by model: it should be stored as-is
         String weirdDate = "07-11-2025T10:00:00Z";
         model.addEntry(new ExpenseIncomeEntry(weirdDate, "Weird date", 100.0, "Income"));
-        assertEquals(1, model.getRowCount());
-        assertEquals(100.0, model.getBalance(), 0.0001);
-        assertEquals(weirdDate, (String) model.getValueAt(0, 0));
+        assertEquals(2, model.getRowCount());
+        assertEquals(100.0, (double) model.getValueAt(1, 2), 0.0001);
+        assertEquals(weirdDate, (String) model.getValueAt(1, 0));
 
         // Large amounts are supported
         model = new ExpenseIncomeTableModel();

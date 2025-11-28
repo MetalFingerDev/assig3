@@ -1,4 +1,4 @@
-# Expense & Income Tracker
+# [Expense & Income Tracker](https://github.com/MetalFingerDev/assig3)
 
 **Name:** [Prajwal Pal](https://github.com/MetalFingerDev/) |
 **Reg. no:** 22BCE10643 |
@@ -137,8 +137,48 @@ This version adds a small JUnit 5 test suite to verify core model behavior and h
   - Edge cases: zero amount allowed, date string is not parsed by the model and remains stored as-is, and big amounts are handled correctly.
 
 - Running tests and validation
+
   - Use `./test/runtests.sh` to automatically download the JUnit console runner, compile sources and tests, and execute tests.
   - Tests are lightweight and fast; they focus on the `ExpenseIncomeTableModel`, not the UI.
+
+  ## What changed in this final version (reviewer summary)
+
+    ![Unit test](docs/screenshots/unit-test.png)
+
+  - Code consolidation: Sources were consolidated into a single package and location (`src/expense_income_tracker/`) to reduce confusion and make imports consistent.
+  - Dependency reduction: Removed the FlatLaf library (UI theme) to avoid additional jars required at runtime; replaced with system LookAndFeel.
+  - Added a JUnit 5 test suite and an automated script (`test/runtests.sh`) to ease verification and to provide a baseline for CI.
+  - Added developer-focused documentation in README, and extended REPORT with detailed development rationale and verification steps.
+
+  ## Manual verification steps (for reviewers)
+
+  1. Quick CLI check:
+
+  ```bash
+  ./cli.sh
+  ```
+
+  2. Run GUI (manual):
+
+  ```bash
+  ./ui.sh
+  ```
+
+  3. Run the JVM-based tests (JUnit) to verify the model behaviour (automated):
+
+  ```bash
+  ./test/runtests.sh
+  ```
+
+  Running `./test/runtests.sh` during this session gave these results:
+
+  - 3 tests executed, 3 successful, 0 failed.
+
+  ## Reviewer checks / Acceptance criteria
+
+  - The basic functionality (add/edit/remove entries) works and `getBalance()` returns the correct numeric sum for entries in the model.
+  - The UI correctly converts Expense values into negative amounts when adding/updating entries.
+  - The test harness (`test/TestTracker.java`) and the JUnit test suite are present and passing locally.
 
 ## Development process & challenges (reviewer-friendly summary)
 
