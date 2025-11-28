@@ -44,6 +44,29 @@ If you want to run the test harness:
 ```bash
 javac -d . src/expense_income_tracker/*.java test/*.java
 java test.TestTracker
+
+## Developer notes: code structure & how it works
+
+- Location and structure
+	- Source code lives under `src/expense_income_tracker/` (Java package `expense_income_tracker`).
+	- Tests are under `test/junit/` and include a small JUnit 5 test suite that validates core model behaviour.
+	- Scripts `cli.sh`, `ui.sh` and `test/runtests.sh` provide quick ways to run the CLI, GUI and tests respectively.
+
+- Main responsibilities
+	- `ExpenseIncomeEntry` — simple POJO for a single record (date, description, amount, type).
+	- `ExpenseIncomeTableModel` — in-memory `AbstractTableModel` that stores a `List<ExpenseIncomeEntry>`, offers add/edit/remove/sort/getBalance behaviors, and is used by the GUI's `JTable`.
+	- `ExpensesIncomesTracker` — builds the UI with Swing input fields and wiring to `ExpenseIncomeTableModel`. It also performs simple input parsing (parsing amount) and business logic: expenses are negated before insertion; income remains positive.
+
+- How the code works (flow)
+	1. UI: user provides Date, Description, Amount, and Type (Expense/Income) and presses Add.
+	2. The code parses the amount as a `double`. If type is `Expense`, the amount sign is negated prior to creating an `ExpenseIncomeEntry`.
+	3. `ExpenseIncomeTableModel.addEntry` stores the new entry and `getBalance()` computes the running balance as the sum of `amount` values.
+
+- Notes for developers
+	- The model is intentionally minimal; additional validation is performed in the GUI only for user input parsing and exceptions.
+	- There is a tiny, documented compiler warning about generics in `ExpenseIncomeTableModel` due to raw use in a collection context — this is non-fatal and can be addressed if desired.
+	- Unit tests use JUnit 5. To run tests, run `./test/runtests.sh` which will download the junit-platform-console-standalone jar and run the tests.
+
 ```
 
 ## Optional: FlatLaf (restore original look-and-feel)

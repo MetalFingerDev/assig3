@@ -1,29 +1,20 @@
 # Architecture & Design
 
-This document describes the high-level architecture of the Expense & Income Tracker application.
+High-level architecture:
 
-## High level
+- CLI Application (Main)
 
-The app uses a simple Model-View(-Controller) pattern with Java Swing:
+Process flow (textual):
 
-- Model: `ExpenseIncomeEntry` (POJO) and `ExpenseIncomeTableModel` (extends `AbstractTableModel`).
-- View / Controller: `ExpensesIncomesTracker` — a `JFrame` that contains input controls (text fields, combobox, buttons), a `JTable` backed by the table model and action listeners that act as the controller.
-- Main entry points: `Expense_Income_Tracker` (simple main) and `ExpensesIncomesTracker` (GUI main).
 
-## Components
+UML / Class diagram (ASCII):
 
-- `ExpenseIncomeEntry` — data holder for a single record (date, description, amount, type).
-- `ExpenseIncomeTableModel` — holds a `List<ExpenseIncomeEntry>` and provides table plumbing: `getRowCount()`, `getColumnCount()`, `getValueAt()`, plus helper methods for add/edit/remove, sort and basic filtering.
-- `ExpensesIncomesTracker` — constructs the UI, wires event listeners for add/edit/remove, updates balance label, and manages input fields.
+Main
 
-## Data flow
+Functional modules:
 
-1. User enters a date, description, amount and type in the input area and clicks "Add".
-2. `ExpensesIncomesTracker.addEntry()` creates an `ExpenseIncomeEntry` and calls `ExpenseIncomeTableModel.addEntry(...)`.
-3. The table model updates its internal list and fires table events to refresh the `JTable` view.
-4. The GUI updates balance and clears inputs.
+Non-functional requirements:
 
-## UML
 
 ExpensesIncomesTracker - tableModel: ExpenseIncomeTableModel - table: JTable + addEntry() + editEntry() + removeEntry()
 
@@ -37,8 +28,19 @@ ExpenseIncomeEntry - date: String - description: String - amount: double - type:
 - Easy to extend: model and table are separate, so adding features is simple.
 - Desktop-focused: built with Swing, works cross-platform.
 
+## Repository & runtime adjustments
+
+- The project is a simplified copy of the original public repository (credit: https://github.com/bhavesh003/Expense_Income_Tracker). Sources were consolidated into a single package: `src/expense_income_tracker` to avoid duplicate locations and inconsistent imports.
+- To reduce friction and avoid an extra dependency, the original theme library (FlatLaf) was removed. The GUI now uses the system look-and-feel via `UIManager.getSystemLookAndFeelClassName()`, so the app runs out-of-the-box without needing external JARs.
+- The CLI (`EvaluatorDriver` / `test/TestTracker.java`) and `cli.sh`/`ui.sh` scripts are provided to compile and run the app quickly for manual verification.
+
 ## Notes / known issues
 
 - `ExpenseIncomeTableModel` triggers a compiler note about generics (not fatal).
 - Data is in-memory only for now.
 - Use `cli.sh` or `ui.sh` to launch the app.
+
+Additional notes:
+
+- A quick test harness (`test/TestTracker.java`) can be used to verify basic model behaviour: it adds two rows and prints table contents and balance to confirm business logic.
+- The code intentionally keeps dependencies minimal—adding new UI LAF libraries is optional and should be documented if introduced in future.
