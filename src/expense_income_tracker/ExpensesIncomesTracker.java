@@ -1,6 +1,5 @@
 package expense_income_tracker;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,10 +19,11 @@ public class ExpensesIncomesTracker extends JFrame {
 
     public ExpensesIncomesTracker() {
         try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-        } catch (UnsupportedLookAndFeelException ex) {
+            // Use the system look and feel to avoid external FlatLaf dependency.
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
             ex.printStackTrace(); // Print the exception details
-            System.err.println("Failed to Set FlatDarkLaf LookAndFeel");
+            System.err.println("Failed to set LookAndFeel");
         }
 
         tableModel = new ExpenseIncomeTableModel();
@@ -31,7 +31,7 @@ public class ExpensesIncomesTracker extends JFrame {
         dateField = new JTextField(10);
         descriptionField = new JTextField(20);
         amountField = new JTextField(10);
-        typeCombobox = new JComboBox<>(new String[]{"Expense", "Income"});
+        typeCombobox = new JComboBox<>(new String[] { "Expense", "Income" });
         addButton = new JButton("Add");
         editButton = new JButton("Edit");
         removeButton = new JButton("Remove");
@@ -128,7 +128,8 @@ public class ExpensesIncomesTracker extends JFrame {
                 updatedAmount *= -1;
             }
 
-            ExpenseIncomeEntry updatedEntry = new ExpenseIncomeEntry(updatedDate, updatedDescription, updatedAmount, updatedType);
+            ExpenseIncomeEntry updatedEntry = new ExpenseIncomeEntry(updatedDate, updatedDescription, updatedAmount,
+                    updatedType);
             tableModel.editEntry(selectedRowIndex, updatedEntry);
 
             balance += updatedAmount;
