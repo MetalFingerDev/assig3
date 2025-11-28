@@ -1,3 +1,10 @@
+**Navigation**
+
+- [REPORT.md](../REPORT.md)
+- [README.md](../README.md)
+- [Architecture](architecture.md)
+- [Documentation](documentation.md)
+
 ## Expense vs Income Tracker
 
 Short and practical: a tiny Java app to track expenses and incomes — add entries and see totals.
