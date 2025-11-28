@@ -2,11 +2,6 @@ package expense_income_tracker;
 
 import java.util.Scanner;
 
-/**
- * Simple CLI driver intended for evaluators.
- * - `--demo` runs a short non-interactive demo and exits.
- * - no args starts a small interactive menu for basic operations.
- */
 public class EvaluatorDriver {
 
     private final ExpenseIncomeTableModel model;
@@ -19,8 +14,6 @@ public class EvaluatorDriver {
         EvaluatorDriver driver = new EvaluatorDriver();
         driver.runInteractive();
     }
-
-    // Removed demo mode for simplicity
 
     private void runInteractive() {
         Scanner sc = new Scanner(System.in);
