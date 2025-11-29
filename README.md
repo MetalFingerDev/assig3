@@ -1,6 +1,6 @@
 # Expense & Income Tracker
 
-Simple desktop budget tracker (Java Swing) — developer-focused README.
+Simple desktop budget tracker (Java Swing)
 
 ## Quick start
 
@@ -15,13 +15,13 @@ Simple desktop budget tracker (Java Swing) — developer-focused README.
 - `cli.sh`, `ui.sh` — convenience scripts to compile and run CLI/UI
 - `test/runtests.sh` — convenience script to download JUnit console and run tests
 
-## Key classes (developer view)
+## Key classes
 
 - `ExpenseIncomeEntry` — simple POJO for a record (date, description, amount, type)
 - `ExpenseIncomeTableModel` — in-memory `AbstractTableModel` holding the list of entries with add/edit/remove/sort and `getBalance()`.
 - `ExpensesIncomesTracker` — UI (Swing JFrame) wiring the model and handling user actions (adding/editing/removing rows).
 
-## How the model & UI behave (summary)
+## How the model & UI behave
 
 - `ExpenseIncomeTableModel.getBalance()` returns the sum of the `amount` column across all entries.
 - The `ExpensesIncomesTracker` UI converts Expense values to negative by negating the parsed amount before creating `ExpenseIncomeEntry`.
